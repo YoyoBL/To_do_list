@@ -31,7 +31,7 @@ export function addTodo(title) {
       createdAt: new Date(),
    };
 
-   // todos.push(newTodo);
+   todos.push(newTodo);
 
    save();
    return newTodo;
