@@ -16,73 +16,100 @@
          integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
          crossorigin="anonymous"
       ></script>
-      <script type="module" src="./app.js"></script>
+      <script type="module" src="./todo/app.js"></script>
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
+      <title>Todo App</title>
    </head>
    <body>
-      <div class="container mt-4 mx-auto">
-         <div class="row">
-            <div class="col-md-8 mx-auto">
-               <div class="row">
-                  <div class="col">
-                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="button-addon2">
-                           I need to:
-                        </label>
-                        <input
-                           type="text"
-                           id="todo-input"
-                           class="form-control"
-                           placeholder="Buy milk..."
-                           aria-label="Recipient's username"
-                           aria-describedby="button-addon2"
-                        />
-                        <button
-                           id="todo-add-btn"
-                           class="btn btn-primary"
-                           type="button"
-                           id="button-addon2"
-                        >
-                           Add
-                        </button>
+      <div class="container mt-3">
+         <div id="display-area" class="row g-3">
+            <!-- <div class="col-6">
+               <div class="bg-info" style="min-height: 100px">
+                  <div class="container mx-auto">
+                     <div class="row">
+                        <div class="col mx-auto">
+                           <div class="row">
+                              <div class="col">
+                                 <div class="input-group mb-3">
+                                    <label
+                                       class="input-group-text"
+                                       for="button-addon2"
+                                    >
+                                       I need to:
+                                    </label>
+                                    <input
+                                       type="text"
+                                       id="todo-input"
+                                       class="form-control"
+                                       placeholder="Buy milk..."
+                                       aria-label="Recipient's username"
+                                       aria-describedby="button-addon2"
+                                       fdprocessedid="gpxc1e"
+                                    />
+                                    <button
+                                       id="todo-add-btn"
+                                       class="btn btn-primary"
+                                       type="button"
+                                       fdprocessedid="n70yn"
+                                    >
+                                       Add
+                                    </button>
+                                    <div class="invalid-feedback"></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div id="todo-list" class="col">
+                                 <ul class="list-group">
+                                    <li
+                                       data-todo-id="2"
+                                       class="todo-item list-group-item position-relative"
+                                    >
+                                       <input
+                                          class="input-checkbox form-check-input me-1"
+                                          type="checkbox"
+                                       />
+                                       <label
+                                          class="form-check-label"
+                                          for="Checkbox2"
+                                          >fnf</label
+                                       >
+
+                                       <i
+                                          class="btn py-0 position-absolute end-0 text-danger bi bi-trash"
+                                       ></i>
+                                    </li>
+
+                                    <li
+                                       data-todo-id="1"
+                                       class="todo-item list-group-item position-relative"
+                                    >
+                                       <input
+                                          class="input-checkbox form-check-input me-1"
+                                          type="checkbox"
+                                       />
+                                       <label
+                                          class="form-check-label"
+                                          for="Checkbox1"
+                                          >jmh</label
+                                       >
+
+                                       <i
+                                          class="btn py-0 position-absolute end-0 text-danger bi bi-trash"
+                                       ></i>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+
+                           <div class="row mt-3"></div>
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="row">
-                  <div id="todo-list" class="col">
-                     <!--
-                         <div class="text-center bg-light">
-                        <h1>Well Done!</h1>
-                        <p>
-                           You are all done for today, go titfanen on the beach!
-                        </p>
-                     </div>
-                   -->
-
-                     <!-- <ul class="list-group">
-                        <li class="todo-item list-group-item"
-                        data-todo-id="1">
-                           <input
-                              class="form-check-input me-1"
-                              type="checkbox"
-                              value=""
-                              id="firstCheckbox"
-                           />
-                           <label class="form-check-label" for="firstCheckbox"
-                              >First checkbox</label
-                           >
-                           <button onclick="deleteBtn()" class="btn btn-info">Delete</button>
-                        </li>
-                       
-                     </ul> -->
-                  </div>
-               </div>
-
-               <div class="row mt-3"></div>
-            </div>
+            </div> -->
          </div>
       </div>
    </body>
