@@ -1,9 +1,25 @@
 import { createTodoData } from "./data.js";
 const $displayArea = document.getElementById("display-area");
 
-let todos = [];
+let todoListId = 1;
+
+let todos = localStorage.getItem("todos-collection")
+   ? JSON.parse(localStorage.getItem("todos-collection"), (key, value) => {
+        if (key === "createdAt") {
+           return new Date(value);
+        }
+        return value;
+     })
+   : [];
 
 let html = ` 
+<div class="col-8 mx-auto">
+<nav aria-label="breadcrumb">
+   <ol class="breadcrumb">
+     <li class="breadcrumb-item active" aria-current="page">Home</li>
+   </ol>
+ </nav>
+</div>
 <div class="col-md-8 mx-auto">
 <div class="row">
    <div class="col">
@@ -15,20 +31,94 @@ let html = `
       </button>
    </div>
 </div>
-<div class="row">
-   <div id="todo-list" class="col"></div>
-</div>
+<div id="todo-collection" class="row mt-2 g-3">
+
 </div>
 `;
 
 $displayArea.innerHTML = html;
 
+const $todoCollection = document.getElementById("todo-collection");
+
+function renderTodoItems({ id, isActive: checked, title }) {
+   // const id = todo.id
+   // const title = todo.title
+   // const checked = todo.isActive
+   // onchange = "handleTodoComplete(${todo.id})"
+   // id="Checkbox${todo.id}"
+   return `
+<li 
+data-todo-id = "${id}"
+class="todo-item list-group-item position-relative">
+<input
+   class="input-checkbox form-check-input me-1"
+   type="checkbox"
+   ${checked ? "checked" : ""}
+/>
+<label class="form-check-label ${
+      checked ? "text-black-50 text-decoration-line-through" : ""
+   }" for="Checkbox${id}"
+   >${title}</label
+>
+
+<i class="btn py-0 position-absolute end-0 text-danger bi bi-trash"></i>
+
+
+</li>
+`;
+}
+
+function renderTodoLists(todos = []) {
+   let html = `<ul data-todo-list-id="${todoListId++}" class="list-group">`;
+
+   for (let todo of todos) {
+      html += renderTodoItems(todo);
+   }
+
+   html += "</ul>";
+   return html;
+}
+
+function previewTodos() {
+   if (todos) {
+      let html = "";
+      for (let i in todos) {
+         let todoListHtml = renderTodoLists(todos[i]);
+         html += `
+         <div class="col-6">
+            <div class="p-3 bg-light">
+               <div id="todo-list" class="col">
+                  ${todoListHtml}
+               </div>
+            </div>
+         </div>
+         `;
+      }
+      $todoCollection.innerHTML = html;
+   }
+}
+
 const $createNewTodosBtn = document.getElementById("create-new-todos-btn");
 
-function loadTodoHtml() {
+function saveTodosCollections() {
+   localStorage.setItem("todos-collection", JSON.stringify(todos));
+}
+
+function loadTodoHtml(isForPreview) {
    let html = ` 
+   <div class="col-8 mx-auto">
+<nav aria-label="breadcrumb">
+   <ol class="breadcrumb">
+     <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+     <li class="breadcrumb-item active" aria-current="page">Todos</li>
+   </ol>
+ </nav>
+</div>
    <div class="col-md-8 mx-auto">
-      <div class="row">
+  ${
+     isForPreview
+        ? ""
+        : ` <div class="row">
          <div class="col">
             <div class="input-group mb-3">
                <label class="input-group-text" for="button-addon2">
@@ -53,22 +143,34 @@ function loadTodoHtml() {
                <div class="invalid-feedback"></div>
             </div>
          </div>
-      </div>
+      </div>`
+  }
       <div class="row">
          <div id="todo-list" class="col">
-            
+           
          </div>
       </div>
 
    
 </div>`;
 
-   $displayArea.innerHTML = html;
+   return html;
 }
 
 $createNewTodosBtn.addEventListener("click", () => {
-   loadTodoHtml();
-   renderTodoList();
+   $displayArea.innerHTML = loadTodoHtml();
+
+   renderAppTodoLists(todos.length + 1);
+});
+
+previewTodos();
+
+window.addEventListener("click", (e) => {
+   if (e.target.closest(".list-group")) {
+      $displayArea.innerHTML = loadTodoHtml();
+      let datasetId = e.target.closest(".list-group").dataset.todoListId;
+      renderAppTodoLists(datasetId);
+   }
 });
 
 // RENDER-----------------------------------------------------------------------------
@@ -76,9 +178,9 @@ $createNewTodosBtn.addEventListener("click", () => {
 // RENDER-----------------------------------------------------------------------------
 // RENDER-----------------------------------------------------------------------------
 // RENDER-----------------------------------------------------------------------------
-function renderTodoList() {
+function renderAppTodoLists(todoId) {
    const { getTodos, changeTodoComplete, addTodo, removeAllTodos, removeTodo } =
-      createTodoData(todos.length + 1);
+      createTodoData(todoId);
 
    const $todoInput = document.getElementById("todo-input");
    const $todoAddBtn = document.getElementById("todo-add-btn");
@@ -172,7 +274,7 @@ function renderTodoList() {
    `;
    }
 
-   function renderTodoList(todos = []) {
+   function renderTodoList(todos = [], todoArray) {
       let html = '<ul class="list-group">';
 
       for (let todo of getTodos()) {
@@ -184,6 +286,7 @@ function renderTodoList() {
    }
 
    function handleNewTodo() {
+      // debugger;
       renderError();
       try {
          addTodo($todoInput.value);
@@ -210,6 +313,11 @@ function renderTodoList() {
          getTodos().length > 0
             ? renderTodoList(...getTodos())
             : renderEmptyListNotification();
+
+      if (getTodos().length > 0) {
+         todos[todoId - 1] = getTodos();
+         saveTodosCollections();
+      }
    }
 
    function handleTodoComplete(id) {
@@ -218,7 +326,6 @@ function renderTodoList() {
    }
 
    function renderRemoveTodo(id) {
-      // debugger;
       removeTodo(id);
       renderTodoApp();
    }
