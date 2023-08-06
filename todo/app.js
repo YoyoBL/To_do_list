@@ -41,11 +41,6 @@ $displayArea.innerHTML = html;
 const $todoCollection = document.getElementById("todo-collection");
 
 function renderTodoItems({ id, isActive: checked, title }) {
-   // const id = todo.id
-   // const title = todo.title
-   // const checked = todo.isActive
-   // onchange = "handleTodoComplete(${todo.id})"
-   // id="Checkbox${todo.id}"
    return `
 <li 
 data-todo-id = "${id}"
@@ -210,31 +205,6 @@ function renderAppTodoLists(todoId) {
       }
    });
 
-   // function listeners() {
-   //    $todoList.addEventListener("change", (e) => {
-   //       if (e.target.matches("input.input-checkbox")) {
-   //          handleTodoComplete(
-   //             Number(e.target.closest("li.todo-item").dataset.todoId)
-   //          );
-   //       }
-   //    });
-
-   //    $todoList.addEventListener("click", (e) => {
-   //       if (e.target.matches("i.bi-trash")) {
-   //          renderRemoveTodo(
-   //             Number(e.target.closest("li.todo-item").dataset.todoId)
-   //          );
-   //       }
-   //    });
-
-   //    $todoAddBtn.addEventListener("click", handleNewTodo);
-   //    $todoInput.addEventListener("keydown", (e) => {
-   //       if (e.key === "Enter") {
-   //          handleNewTodo();
-   //       }
-   //    });
-   // }
-
    function renderEmptyListNotification() {
       return `
    <div class="text-center bg-light">
@@ -247,11 +217,6 @@ function renderAppTodoLists(todoId) {
    }
 
    function renderTodoItem({ id, isActive: checked, title }) {
-      // const id = todo.id
-      // const title = todo.title
-      // const checked = todo.isActive
-      // onchange = "handleTodoComplete(${todo.id})"
-      // id="Checkbox${todo.id}"
       return `
    <li 
    data-todo-id = "${id}"
@@ -286,7 +251,6 @@ function renderAppTodoLists(todoId) {
    }
 
    function handleNewTodo() {
-      // debugger;
       renderError();
       try {
          addTodo($todoInput.value);
